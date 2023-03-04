@@ -1,24 +1,17 @@
 package br.com.ebook;
 
-import java.time.LocalDate;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
 
 public class Main {
 
     public static void main(String[] args) {
 
-        Cliente cliente = new Cliente();
-        cliente.setNome("Salomão Silva");
-        cliente.setDataNascimento(LocalDate.of(1989, 9, 15));
-        cliente.setCpf("000.000.000-00");
-
         EntityManager entityManager = ConectorJpa.getEntityManager();
-        EntityTransaction entityTransaction = entityManager.getTransaction();
-        entityTransaction.begin();
+        Cliente cliente = entityManager.find(Cliente.class, 1L);
 
-        entityManager.persist(cliente);
-        entityTransaction.commit();
+        System.out.println("Nome: " + cliente.getNome());
+        System.out.println("CPF: " + cliente.getCpf());
+        System.out.println("Nascimento: " + cliente.getDataNascimento());
 
         entityManager.close();
         ConectorJpa.fechar();
